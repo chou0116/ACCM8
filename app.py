@@ -22,6 +22,7 @@ app.secret_key = 'your secret key'
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_DB'] = 'accm'
+app.config['MYSQL_PORT'] = 3307
 
 # configuration file for db password, mailing setting
 app.config.from_pyfile('./static/config.cfg')
