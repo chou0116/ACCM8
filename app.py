@@ -7,12 +7,21 @@ from flask_mysqldb import MySQL
 from flask_mail import Mail, Message
 from passlib.hash import sha256_crypt
 import inputCSV
+from administrator import adminBlueprint
+from programs import programsBlueprint
+from programVersions import programVersionsBlueprint
+from courses import coursesBlueprint
 
 app = Flask(__name__)
+app.register_blueprint(adminBlueprint)
+app.register_blueprint(programsBlueprint)
+app.register_blueprint(programVersionsBlueprint)
+app.register_blueprint(coursesBlueprint)
 Bootstrap(app)
 
 # indicate the folder when loading the input files
-UPLOAD_FOLDER = 'd:/1.MyDoc/2020W/CST8268_Project/project/ACCM7/Upload/'
+currentWorkingDirectory = os.getcwd()
+UPLOAD_FOLDER = currentWorkingDirectory + '/Upload/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Change this to your secret key (can be anything, it's for extra protection)
@@ -24,6 +33,7 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_DB'] = 'accm'
 app.config['MYSQL_PORT'] = 3307
 
+
 # configuration file for db password, mailing setting
 app.config.from_pyfile('./static/config.cfg')
 
@@ -33,7 +43,7 @@ app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = 1
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 # gmail account to notify a new user's registration (sender, receipient)
-emailAccount = '';
+emailAccount = ''
 
 # Intialize MySQL
 mysql = MySQL(app)
@@ -41,6 +51,7 @@ mysql = MySQL(app)
 # http://localhost:5000/ - this will be the login page, we need to use both GET and POST requests
 @app.route('/', methods=['GET','POST'])
 def login():
+    # ronak changes
     # Output message if something goes wrong...
     msg = ''
     # Check if "username" and "password" POST requests exist (user submitted form)
@@ -50,6 +61,8 @@ def login():
         passwordUser = request.form['password']
         category = request.form['category']
         msg=category
+
+        # ronak's changes 
 
         # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -173,6 +186,8 @@ def home():
         return render_template('home.html', bUpload=session['bUpload'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
+
+
 
 # http://localhost:5000/profile - this will be the profile page, only accessible for loggedin users
 @app.route('/profile', methods=['POST','GET'])
@@ -438,7 +453,7 @@ def viewFlowchart(sid, sVersion, sProgram, sLevel, sCourse):
     flowchart_courses = []
 
     mainc = []
-    prev = 0;
+    prev = 0
     for c in flowchart:
         if(prev != c['sequence']):
             flowchart_courses.append(
@@ -590,3 +605,5 @@ def viewFlowchart(sid, sVersion, sProgram, sLevel, sCourse):
     return render_template('viewFlowchart.html', flowchart_courses=iawd_course_map, prerequisite_links=prereq_links, sid = sid,
                            student_results = student_grades, studentName = student_name, studentNum = student_num, values=request.form,
                            bBackKey=bBackKey, random=r, admin_session = admin_session, v=v, bEditGrade=bEditGrade)
+
+
