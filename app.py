@@ -403,6 +403,12 @@ def viewGrade():
     #show the viewGrade for GET method
     return render_template('viewGrade.html', vDict=versionDict, pDict=programDict, lvlDict=lvlDict, cDict=courseDict, values=request.form)
 
+# Administrator pages right here
+@app.route("/administrator/ProgramOfferPage")
+def ProgramOfferPage():
+    return render_template('ProgramOfferPage.html', title='Program Offered Page')
+
+# End of Administrator pages
 
 # http://localhost:5000/viewFlowchart
 

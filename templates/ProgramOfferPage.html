@@ -1,0 +1,304 @@
+{% extends "bootstrap/base.html" %}
+{% include 'layout.html' %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{url_for('.static', filename='accm.css')}}">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jointjs/2.1.0/joint.css">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+{{ super() }}
+{% endblock %}
+
+# ctr + alt + shift + L to format code
+{% block content %}
+
+<div class="container">
+    <button class="tablink" onclick="openPage('Courses', this, '#28A745')">Courses</button>
+    <button class="tablink" onclick="openPage('StudentReport', this, '#28A745')">Student Report</button>
+    <div id="Courses" class="tabcontent">
+        <h1 class="text-center">Course Overview</h1>
+        </br>
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Course Name</th>
+                <th scope="col">Course Code</th>
+                <th scope="col">Course Description</th>
+                <th scope="col">Student Progress Map</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">Database</th>
+                <td>CST8260</td>
+                <td>This is the database course description</td>
+                <td><a href="#" class="badge badge-flowchart" title="Course flowchart" value=""><i
+                        class="fas fa-project-diagram"></i></a>
+                </th></td>
+                <td>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Update
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-success">Add New Course</button>
+
+        <!--<p>this is one</p>
+        <p>this is two</p>
+        <p>this is three</p>-->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Course Name</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="far fa-times-circle"></i>
+                        </button>
+
+                    </div>
+
+                    <form class="needs-validation">
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Course</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Code</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Pre-requisite</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Description</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <p class="text-success text-center">Record has been saved successfully!</p>
+
+                        </div>
+                        <div class="modal-footer">
+                            </br>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-success" value="Save">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div id="StudentReport" class="tabcontent">
+        <h1 class="text-center">Student Report</h1>
+        </br>
+        <div class="d-flex justify-content-center">
+            <div class="d-inline-block col-md-6 mb-3">
+                <select class="custom-select d-block w-100 courseList selectFilter">
+                    <option value="">Level 1</option>
+                    <option value="">Level 2</option>
+                    <option value="">Level 3</option>
+                    <option value="">Level 4</option>
+                </select>
+            </div>
+            <div class="d-inline-block">
+                <input type="submit" class="btn btn-success input-field" value="View Report" id="viewGrade">
+
+            </div>
+        </div>
+        </br>
+        <div>
+            <p class="text-center">The following students cannot proceed to the next level as they have not met the
+                program requirement</p>
+
+            <table class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Student#</th>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Student Progress Map</th>
+                    <th scope="col">Courses Fail</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td scope="row">040930933</td>
+                    <td>Maria</td>
+                    <td><a href="#" class="badge badge-flowchart" title="Course flowchart" value=""><i
+                            class="fas fa-project-diagram"></i></a>
+                    </td>
+                    <td>CST8279-Python</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+</br>
+</br>
+</br>
+        <div>
+            <h3 class="text-center font-weight-bold">Pass</h3>
+            </br>
+            <p class="text-center">The following students have met the program requirement, and proceed to the next level</p>
+             <table class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Student#</th>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Student Progress Map</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td scope="row">04092940</td>
+                     <td scope="row">John</td>
+                    <td><a href="#" class="badge badge-flowchart" title="Course flowchart" value=""><i
+                            class="fas fa-project-diagram"></i></a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+</div>
+<footer class="container ">
+    <p class="float-right">© Algonquin College 2019-2020</p>
+</footer>
+
+<style>
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #bab8b7;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 12px 12px;
+  font-size: 17px;
+  width: 15%;
+}
+
+.tablink:hover {
+  background-color: #28A745;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: black;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+#Courses {background-color: #f3f4f7;}
+#StudentReport {background-color: #f3f4f7;}
+
+// style for the progress map icon
+.fa-project-diagram:before {
+    content: "\f542";
+}
+.badge-flowchart {
+    color: #20C997;
+    border: 1px solid #20C997;
+    background-color: #A2E6D2;
+}
+.badge {
+    display: inline-block;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+}
+.table td, .table th {
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    text-align: center;
+}
+
+////Style for Student report page
+
+
+
+
+
+
+
+
+
+
+</style>
+<script>
+   function openPage(pageName, elmnt, color) {
+  // Hide all elements with class="tabcontent" by default */
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Remove the background color of all tablinks/buttons
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+
+  // Show the specific tab content
+  document.getElementById(pageName).style.display = "block";
+
+  // Add the specific color to the button used to open the tab content
+  elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+//document.getElementById("defaultOpen").click();
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+{% endblock %}
+#ref: https://www.w3schools.com/howto/howto_js_full_page_tabs.asp
