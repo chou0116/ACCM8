@@ -13,77 +13,73 @@
     </div>
 
 
-    <form action="/" method="post" id="createProgramForm">
-        <div class="form-group row">
-            <label for="programCode" class="col-sm-2 col-form-label text-muted">Program Code</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="programCode" name="programCode" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="programName" class="col-sm-2 col-form-label text-muted">Program Name</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="programName" name="programName" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <span class="col-sm-2 col-form-label"></span>
-            <div class="col-sm-10">
-                <button type="submit" class="btn btn-success my-1" id="submitBtn">Create Program</button>
-                <button type="reset" class="btn btn-primary my-1" value="Reset" id="clearBtn">Clear Form</button>
-            </div>
-        </div>
-    </form>
-
-
-    <div class="form-group row col-md-12" id="messageBox" style="height: 100px;">
-        <div class="col-md-10"><label id="sucessConfirmation" class="form-control alert-success"
-                                      style="display: none; text-align: center;">{{message}}</label></div>
-        <div class="col-md-10"><label id="errorConfirmation" class="form-control alert-danger"
-                                      style="display: none; text-align: center;">{{message}}</label></div>
+    <form action="{{ url_for('programs.programs') }}" method="post" id="createProgramForm" name="createProgramForm">
+    <div class="form-group row">
+      <label for="programCode" class="col-sm-2 col-form-label ">Program Code</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="programCode" name="programCode" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="programName" class="col-sm-2 col-form-label">Program Name</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="programName" name="programName" required>
+      </div>
     </div>
 
-
-    {% if codes|length > 0 %}
-
-    <div id="programTable">
-
-        <table class="table table-bordered table-striped text-muted">
-            <thead>
-            <tr>
-                <th scope="col">Program Code</th>
-                <th scope="col">Program Name</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody id="tableBody">
-            {% for x in codes %}
-            <tr>
-                <td>
-                    <span class="programCodeSpan">{{ codes[loop.index - 1]}}</span>
-                    <input type="text" class="form-control programCodeEditInputTag" name="editProgramCode"
-                           style="display:none;">
-                </td>
-                <td>
-                    <span class="programNameSpan">{{ names[loop.index - 1]}}</span>
-                    <input type="text" class="form-control programNameEditInputTag" name="editProgramName"
-                           style="display:none;">
-                </td>
-                <td>
-                    <button type="button" class="btn btn-primary editBtn">Edit</button>
-                    <button type="button" class="btn btn-success saveBtn" style="display:none;">Save</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-danger deleteBtn">Delete</button>
-                    <button type="button" class="btn btn-primary cancelBtn" style="display:none;">Cancel</button>
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-
-        </table>
+    <div class="form-group row">
+      <span class="col-sm-2 col-form-label"></span>
+      <div class="col-sm-10">
+        <button type="submit" class="btn btn-primary my-1" id="submitBtn" name="submitBtn">Add Program</button>
+        <button type="reset" class="btn btn-primary my-1" value="Reset" id="clearBtn">Clear Form</button>
+      </div>
     </div>
+  </form>
+
+
+  <div class="row" id="messageBox" style="height: 100px;">
+      {% if success %}
+    <div class="col-md-10"><label id="sucessConfirmation" class="form-control alert-success" >{{message}}</label></div>
+      {% elif failure %}
+    <div class="col-md-10"><label id="errorConfirmation" class="form-control alert-danger" >{{message}}</label></div>
+      {% endif %}
+  </div>
+
+  {% if programs|length > 0 %}
+
+  <div id="programTable">
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Program Code</th>
+          <th scope="col">Program Name</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        {% for program in programs %}
+        <form action="{{ url_for('programs.programs') }}" method="post" id="testForm2" name="testForm2">
+        <tr>
+
+            <td>
+              <span class="programCodeSpan">{{ program['program_code'] }}</span>
+              <input type="text" class="form-control" name="deleteProgramCode_{{loop.index - 1}}" value="{{ program['program_code'] }}" style="display:none;">
+            </td>
+            <td>
+              <span class="programNameSpan">{{ program['program_name'] }}</span>
+            </td>
+            <td>
+              <button type="submit" id="deleteBtn_{{loop.index - 1}}" name="deleteBtn_{{loop.index - 1}}" class="btn btn-danger deleteBtn">Delete</button>
+            </td>
+
+        </tr>
+        </form>
+        {% endfor %}
+      </tbody>
+
+    </table>
+  </div>
     {% endif %}
 
 

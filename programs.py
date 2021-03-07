@@ -5,67 +5,69 @@ import MySQLdb as mdb1
 programsBlueprint = Blueprint("programs", __name__, static_folder="static", template_folder="template")
 
 
-@programsBlueprint.route("/administrator/programs")
+@programsBlueprint.route("/administrator/programs", methods=["POST", "GET"])
 def programs():
+    programs = readPrograms()
 
-    rows = readAllProgramsOffered()
-    codes, names= seperateProgramData(rows)
+    parameters = request.form.to_dict()
 
-    return render_template("programs.html",codes=codes, names=names)
+    _list = list(parameters.keys())
 
+    buttonType = ""
+    inputFieldName = ""
 
+    if len(_list) > 0:
+        buttonName = _list[1]
+        inputFieldName = _list[0]
+        buttonType = buttonName.split('_')[0]
 
-@programsBlueprint.route("/administrator/programs/createProgram", methods=["POST", "GET"])
-def createProgram():
-
-    if request.method == "POST":
-
-        programCode = request.form["programCode"]
-        programName = request.form["programName"]
+    if request.method == 'POST' and 'submitBtn' in request.form:
+        programName = request.form['programName']
+        programCode = request.form['programCode']
 
         if checkIfProgramOfferedExists(programCode):
-            return jsonify(status="0", message="The specified program already exists")
+            message = "The specified program already exists"
+            return render_template("programs.html", programs=programs, message=message, success=False, failure=True)
 
         createProgramOfferingQuery(programCode, programName)
+        message = "The program was added successfully"
+        programs = readPrograms()  # read the new list of programs from database again
 
-        return jsonify(status="1", message="Successfully added new program")
+        return render_template("programs.html", programs=programs, message=message, success=True, failure=False)
 
+    elif request.method == 'POST' and buttonType == "deleteBtn":
 
-@programsBlueprint.route("/administrator/programs/deleteProgram", methods=["POST", "GET"])
-def deleteProgram():
-    if request.method == "POST":
+        programCode = request.form[inputFieldName]
 
-        programCode = request.json['programCode']
-
-        programVersionsExist = checkIfProgramVersionsExistQuery(programCode)
-
-        if programVersionsExist:
-            return jsonify(status="0", message="The Program has other data associated with it, it cannot be removed on this page")
+        if checkIfProgramVersionsExist(programCode):
+            message = "The program has other data associated with it and cannot be deleted"
+            return render_template("programs.html", programs=programs, message=message, success=False, failure=True)
 
         deleteProgramOfferedQuery(programCode)
 
-        return jsonify(status="1", message="Program was successfully deleted")
+        programs = readPrograms()  # read the new list of programs from database again
+
+        message = "Program was deleted successfully"
+        return render_template("programs.html", programs=programs, message=message, success=True, failure=False)
+
+    else:
+        return render_template("programs.html", programs=programs, message="", success=False, failure=False)
 
 
-@programsBlueprint.route("/administrator/programs/updateProgram", methods=["POST", "GET"])
-def updateProgram():
-    if request.method == "POST":
 
-        programCode = request.json['programCode']
-        programName = request.json['programName']
-        oldProgramCode = request.json['oldProgramCode']
+def readPrograms():
+    con = createCursor()
+    query = f"""SELECT * FROM accm.program_offered;"""
 
-        programVersionsExist = checkIfProgramVersionsExistQuery(oldProgramCode)
+    cursor = con.cursor()
+    cursor.execute(query)
 
-        print(programCode + "-" + programName + "-" + oldProgramCode)
+    names = [d[0] for d in cursor.description]
+    programs = [dict(zip(names, row)) for row in cursor.fetchall()]
 
-        if programVersionsExist:
-            return jsonify(status="0", message="The Program has multiple year versions, it's information cannot be updated at this point")
+    con.close()
 
-        updateProgramInfoQuery(programCode, programName)
-
-        return jsonify(status="1", message="Program was successfully updated")
-
+    return programs
 
 
 
@@ -82,16 +84,6 @@ def createCursor():
     return con
 
 
-def seperateProgramData(rows):
-    codes = []
-    names = []
-
-    for i in range(len(rows)):
-        codes.append(rows[i][0])
-        names.append(rows[i][1])
-
-    return codes, names
-
 
 
 def createProgramOfferingQuery(programCode, programName):
@@ -106,17 +98,7 @@ def createProgramOfferingQuery(programCode, programName):
     con.close()
 
 
-def updateProgramInfoQuery(programCode, programName):
-    con = createCursor()
-    query = f""" 
-            UPDATE program_offered 
-            SET program_code = '{programCode}', program_name = '{programName}'
-            WHERE program_code = '{programCode}';
-            """
-    cursor = con.cursor()
-    cursor.execute(query)
-    con.commit()
-    con.close()
+
 
 
 def deleteProgramOfferedQuery(programCode):
@@ -126,32 +108,6 @@ def deleteProgramOfferedQuery(programCode):
     cursor.execute(query)
     con.commit()
     con.close()
-
-
-def readAllProgramsOffered():
-    con = createCursor()
-    query = f"SELECT * FROM program_offered;"
-    cursor = con.cursor()
-    cursor.execute(query)
-    rows = cursor.fetchall()
-    con.close()
-    return rows
-
-
-def checkIfProgramVersionsExistQuery(programCode):
-    con = createCursor()
-    query = f"SELECT COUNT(*) FROM program WHERE code = '{programCode}';"
-    cursor = con.cursor()
-    cursor.execute(query)
-    rowCount = cursor.fetchone()
-    count = rowCount[0]
-    con.close()
-
-    if count > 0:
-        return True
-
-    return False
-
 
 
 def checkIfProgramOfferedExists(programCode):
@@ -170,4 +126,20 @@ def checkIfProgramOfferedExists(programCode):
 
     return False
 
+
+def checkIfProgramVersionsExist(programCode):
+
+    con = createCursor()
+    query = f"SELECT COUNT(*) FROM program WHERE code='{programCode}';"
+    cursor = con.cursor()
+    cursor.execute(query)
+    rowCount = cursor.fetchone()
+    count = rowCount[0]
+    con.close()
+
+
+    if count > 1:
+        return True
+
+    return False
 
