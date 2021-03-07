@@ -33,6 +33,7 @@ app.secret_key = 'your secret key'
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_DB'] = 'accm'
+app.config['MYSQL_PORT'] = 3307
 
 
 # configuration file for db password, mailing setting
@@ -607,4 +608,8 @@ def viewFlowchart(sid, sVersion, sProgram, sLevel, sCourse):
                            student_results = student_grades, studentName = student_name, studentNum = student_num, values=request.form,
                            bBackKey=bBackKey, random=r, admin_session = admin_session, v=v, bEditGrade=bEditGrade)
 
+# This is for Course Progression Page
 
+@app.route("/administrator/courseProgression")
+def courseProgression():
+    return render_template('courseProgression.html', title='Course Progression')
