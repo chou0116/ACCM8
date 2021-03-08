@@ -18,34 +18,11 @@
     </br>
     </br>
     <p class="text-center">This page is used to edit the course sequence for different program versions</p>
-    <!--first form-->
-    <div class="d-flex justify-content-center">
-        <div class="d-inline-block col-md-6 mb-3">
-            <select class="custom-select d-block w-100">
-                <option value="">3002X Internet Applications & Web Development</option>
-            </select>
-        </div>
-        <div class="d-inline-block">
-            <input type="submit" class="btn btn-success input-field" value="View" id="">
 
-        </div>
-    </div>
-    </br>
-    </br>
-
-    <!--second form-->
     <div>
-        <div class="d-flex justify-content-center">
-            <div class="d-inline-block col-md-6 mb-3">
-                <button type="button" class="btn btn-success">Save Progression</button>
-                <button type="button" class="btn btn-danger">Delete Progression</button>
-
-            </div>
-            <div class="d-flex justify-content-right">
-                <div class="d-inline-block col-md-6 mb-3">
-                    <button type="reset" class="btn btn-secondary">Clear</button>
-                </div>
-            </div>
+        <div class="gap"> <!--d-flex justify-content-center-->
+            <button type="button" class="btn btn-success gapbutton">Save Progression</button>
+            <button type="button" class="btn btn-secondary gapbutton">Edit Form</button>
         </div>
         <div class="d-flex justify-content-center">
             <span>This is the message space</span>
@@ -125,6 +102,14 @@ footer {
     position: fixed;
     left: 0;
     bottom: 0;
+}
+
+.gap {
+ display: flex;
+ justify-content: center;
+}
+.gapbutton {
+ margin: 15px;
 }
 
 
