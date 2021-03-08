@@ -12,6 +12,7 @@ from programs import programsBlueprint
 from programVersions import programVersionsBlueprint
 from courses import coursesBlueprint
 from studentsReport import studentsReportBlueprint
+from courseProgression import courseProgressionBlueprint
 
 app = Flask(__name__)
 app.register_blueprint(adminBlueprint)
@@ -19,6 +20,7 @@ app.register_blueprint(programsBlueprint)
 app.register_blueprint(programVersionsBlueprint)
 app.register_blueprint(coursesBlueprint)
 app.register_blueprint(studentsReportBlueprint)
+app.register_blueprint(courseProgressionBlueprint)
 Bootstrap(app)
 
 # indicate the folder when loading the input files
