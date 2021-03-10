@@ -615,3 +615,8 @@ def viewFlowchart(sid, sVersion, sProgram, sLevel, sCourse):
 @app.route("/administrator/courseProgression")
 def courseProgression():
     return render_template('courseProgression.html', title='Course Progression')
+
+# This is for course overview
+@app.route("/administrator/courseOverview")
+def courseOverview():
+    return render_template('courseOverview.html', title='Course Overview')

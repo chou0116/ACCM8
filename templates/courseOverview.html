@@ -1,0 +1,138 @@
+{% extends "bootstrap/base.html" %}
+{% include 'layout.html' %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{url_for('.static', filename='accm.css')}}">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jointjs/2.1.0/joint.css">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+{{ super() }}
+{% endblock %}
+
+# ctr + alt + shift + L to format code
+{% block content %}
+
+<div class="container">
+    <!--The first form for table course overview-->
+    <div id="Courses" class="tabcontent">
+        <h1 class="text-center">Course Overview</h1>
+        </br>
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Course Code</th>
+                <th scope="col">Course Title</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>CST8260</td>
+                <td>This is the database course description</td>
+                <td>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Update
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-success">Add New Course</button>
+    </div>
+
+ <!--   The second form for modal box-->
+    <div class="modal fade" id="myModal" name="nameModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Course Name</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="far fa-times-circle"></i>
+                    </button>
+                </div>
+                <form class="needs-validation">
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Course</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Code</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Pre-requisite</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Description</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <p class="text-success text-center">Record has been saved successfully!</p>
+                    </div>
+                    <div class="modal-footer">
+                        </br>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <input type="submit" class="btn btn-success" value="Save">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="container">
+    <footer>
+        <p class="float-right">© Algonquin College 2019-2020</p>
+    </footer>
+</div>
+
+<style>
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: black;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+.table td, .table th {
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    text-align: center;
+}
+
+footer {
+    width: 100%;
+    padding-right: 250px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 50px;
+    padding-bottom: 0px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+</style>
+{% endblock %}
