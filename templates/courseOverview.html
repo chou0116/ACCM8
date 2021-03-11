@@ -43,7 +43,8 @@
 
             </tbody>
         </table>
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModalCreate">Add New Course
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModalCreate">Add New
+            Course
         </button>
     </div>
 
@@ -159,21 +160,30 @@
             </div>
         </div>
     </div>
-
-
 </div>
-<div class="container">
-    <footer>
-        <p class="float-right text-white">© Algonquin College 2019-2020</p>
-    </footer>
-</div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="float-right text-white">© Algonquin College 2019-2021</p>
+    </div>
+</footer>
 
 <style>
-body, html {
+html, body {
   height: 100%;
-  margin: 0;
-  font-family: Arial;
 }
+
+
+/* Set the fixed height of the footer here */
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #006341;
+    padding-top: 15px;
+}
+
 
 /* Style the tab content (and add height:100% for full page content) */
 .tabcontent {
@@ -189,19 +199,6 @@ body, html {
     text-align: center;
 }
 
-footer {
-    width: 100%;
-    padding-right: 250px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    padding-top: 20px;
-    padding-bottom: 0px;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    background-color: #006341;
-}
 
 .modal-header {
 background-color: #66b45f;
@@ -209,6 +206,7 @@ background-color: #66b45f;
 .detele-header {
 background-color: #d66464;
 }
+
 
 </style>
 {% endblock %}
