@@ -29,22 +29,25 @@
             <tbody>
             <tr>
                 <td>CST8260</td>
-                <td>This is the database course description</td>
+                <td>Database</td>
                 <td>
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Update
                     </button>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalDelete">
+                        Delete
+                    </button>
                 </td>
             </tr>
 
             </tbody>
         </table>
-        <button type="button" class="btn btn-success">Add New Course</button>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModalCreate">Add New Course
+        </button>
     </div>
 
- <!--   The second form for modal box-->
+    <!--   The second form for modal box update-->
     <div class="modal fade" id="myModal" name="nameModal" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -93,10 +96,74 @@
         </div>
     </div>
 
+    <!--   The third form for modal box create new course-->
+    <div class="modal fade" id="myModalCreate" name="nameModalCreate" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Course</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="far fa-times-circle"></i>
+                    </button>
+                </div>
+                <form class="needs-validation">
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Course Code</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Course Titlte</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Description</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        </br>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <input type="submit" class="btn btn-success" value="Save">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--   The fourth form for modal box delete course-->
+    <div class="modal fade" id="myModalDelete" name="nameModalDelete" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header detele-header">
+                    <h5 class="modal-title">Delete Course</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="far fa-times-circle"></i>
+                    </button>
+                </div>
+                <form class="needs-validation">
+                    <div class="modal-body">
+                        <p class="text-center font-weight-bold">Are you sure to delete the course?</p>
+                    </div>
+                    <div class="modal-footer">
+                        </br>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <input type="submit" class="btn btn-success" value="OK">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
 </div>
 <div class="container">
-    <footer>
+    <footer class="bg-success">
         <p class="float-right">© Algonquin College 2019-2020</p>
     </footer>
 </div>
@@ -128,11 +195,19 @@ footer {
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
-    padding-top: 50px;
+    padding-top: 20px;
     padding-bottom: 0px;
     position: fixed;
     left: 0;
     bottom: 0;
 }
+
+.modal-header {
+background-color: #66b45f;
+}
+.detele-header {
+background-color: #d66464;
+}
+
 </style>
 {% endblock %}
