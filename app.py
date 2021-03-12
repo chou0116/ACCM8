@@ -42,11 +42,11 @@ mysql = MySQL(app)
 
 # Add the pages admin, courses, course progression
 from administrator import adminBlueprint
-from courses import coursesBlueprint
 from studentsReport import studentsReportBlueprint
+from coreCourses import coreCoursesBlueprint
 
 app.register_blueprint(adminBlueprint)
-app.register_blueprint(coursesBlueprint)
+app.register_blueprint(coreCoursesBlueprint)
 app.register_blueprint(studentsReportBlueprint)
 
 
