@@ -129,7 +129,7 @@ def viewStudentsReport():
 
 def createCursor():
     try:
-        con = mdb1.connect(host='localhost', user='root', password='5Iodine3', database='accm', port=3306)
+        con = mdb1.connect(host='localhost', user='root', password='root', database='accm', port=3306)
 
 
     except mdb1.Error as e:
