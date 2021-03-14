@@ -620,3 +620,7 @@ def courseProgression():
 @app.route("/administrator/courseOverview")
 def courseOverview():
     return render_template('courseOverview.html', title='Course Overview')
+# student report page
+@app.route("/administrator/studentsReport")
+def studentsReport():
+    return render_template('studentsReport.html', title='Student Report')
