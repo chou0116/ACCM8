@@ -157,7 +157,7 @@ def readProgramVersions():
 
 def readPrograms():
     con = createCursor()
-    query = f"""SELECT * FROM accm.program_offered;"""
+    query = f"""SELECT * FROM accm.program;"""
 
     cursor = con.cursor()
     cursor.execute(query)
